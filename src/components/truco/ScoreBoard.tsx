@@ -6,9 +6,9 @@ interface ScoreBoardProps {
 
 export function ScoreBoard({ match }: ScoreBoardProps) {
   return (
-    <div className="flex justify-between items-start px-6 py-5 bg-gray-900 border-b border-gray-800">
+    <div className="flex items-stretch px-4 py-5 bg-gray-900 border-b border-gray-800 gap-3">
       <TeamScore team={match.teamA} align="left" />
-      <div className="text-gray-600 text-2xl font-light self-center">–</div>
+      <div className="text-gray-600 text-2xl font-light flex items-center">–</div>
       <TeamScore team={match.teamB} align="right" />
     </div>
   );
@@ -22,11 +22,13 @@ function TeamScore({
   align: "left" | "right";
 }) {
   return (
-    <div className={`flex flex-col ${align === "right" ? "items-end" : "items-start"}`}>
+    <div
+      className={`flex flex-col w-0 flex-1 break-words ${align === "right" ? "items-end text-right" : "items-start text-left"}`}
+    >
       <span className="text-5xl font-bold text-yellow-400">{team.score}</span>
-      <span className="text-sm text-gray-400 mt-1">{team.name}</span>
+      <span className="text-sm text-gray-400 mt-1 leading-tight">{team.name}</span>
       {team.members.length > 0 && (
-        <span className="text-xs text-gray-500">{team.members.join(", ")}</span>
+        <span className="text-xs text-gray-500 leading-tight">{team.members.join(", ")}</span>
       )}
     </div>
   );

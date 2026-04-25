@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { getMatch, updateMatch } from "~/lib/storage";
-import { addScore, checkWinner, resetMatch, SCORE_BUTTONS, undoLastRound } from "~/lib/truco";
+import { getMatch, saveMatch, updateMatch } from "~/lib/storage";
+import { addScore, checkWinner, createTrucoMatch, SCORE_BUTTONS, undoLastRound } from "~/lib/truco";
 import { ScoreBoard } from "~/components/truco/ScoreBoard";
 import { ScoreButtons } from "~/components/truco/ScoreButtons";
 import { MatchControls } from "~/components/truco/MatchControls";
+import { TrucoSetupModal } from "~/routes/truco/-setup";
 import type { TrucoMatch } from "~/types";
 
 export const Route = createFileRoute("/truco/$matchId")({
@@ -16,6 +17,7 @@ function TrucoMatchPage() {
   const navigate = useNavigate();
   const [match, setMatch] = useState<TrucoMatch | null>(null);
   const [winner, setWinner] = useState<"A" | "B" | null>(null);
+  const [showSetup, setShowSetup] = useState(false);
 
   useEffect(() => {
     const loaded = getMatch(matchId);
@@ -29,10 +31,25 @@ function TrucoMatchPage() {
 
   function applyAndSave(updated: TrucoMatch) {
     const w = checkWinner(updated);
-    const final = w ? { ...updated, status: "finished" as const, finishedAt: new Date().toISOString() } : updated;
+    const final = w
+      ? { ...updated, status: "finished" as const, finishedAt: new Date().toISOString() }
+      : updated;
     setMatch(final);
     setWinner(w);
     updateMatch(final);
+  }
+
+  function handleNewGame(values: { teamAName: string; teamBName: string; maxScore: number }) {
+    const newMatch = createTrucoMatch({
+      teamAName: values.teamAName || "Nós",
+      teamAMembers: [],
+      teamBName: values.teamBName || "Eles",
+      teamBMembers: [],
+      maxScore: values.maxScore,
+    });
+    saveMatch(newMatch);
+    setShowSetup(false);
+    navigate({ to: "/truco/$matchId", params: { matchId: newMatch.id } });
   }
 
   if (!match) return null;
@@ -52,27 +69,41 @@ function TrucoMatchPage() {
 
       <div className="flex flex-1 overflow-hidden">
         <ScoreButtons
-          label={match.teamA.name}
           buttons={SCORE_BUTTONS}
           onScore={(pts) => applyAndSave(addScore(match, "A", pts))}
-          disabled={!!winner}
+          matchFinished={!!winner}
+          currentScore={match.teamA.score}
+          maxScore={match.maxScore}
           align="left"
         />
 
         <MatchControls
           match={match}
           onUndo={() => applyAndSave(undoLastRound(match))}
-          onNewGame={() => applyAndSave(resetMatch(match))}
+          onNewGameClick={() => setShowSetup(true)}
         />
 
         <ScoreButtons
-          label={match.teamB.name}
           buttons={SCORE_BUTTONS}
           onScore={(pts) => applyAndSave(addScore(match, "B", pts))}
-          disabled={!!winner}
+          matchFinished={!!winner}
+          currentScore={match.teamB.score}
+          maxScore={match.maxScore}
           align="right"
         />
       </div>
+
+      {showSetup && (
+        <TrucoSetupModal
+          defaults={{
+            teamAName: match.teamA.name,
+            teamBName: match.teamB.name,
+            maxScore: match.maxScore,
+          }}
+          onConfirm={handleNewGame}
+          onCancel={() => setShowSetup(false)}
+        />
+      )}
     </div>
   );
 }

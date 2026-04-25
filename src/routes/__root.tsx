@@ -1,12 +1,6 @@
-import {
-  createRootRoute,
-  HeadContent,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@tanstack/react-router";
+import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import "~/styles/app.css";
-
+ 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -28,7 +22,6 @@ function RootLayout() {
         <div className="max-w-md mx-auto min-h-screen">
           <Outlet />
         </div>
-        <ScrollRestoration />
         <Scripts />
       </body>
     </html>

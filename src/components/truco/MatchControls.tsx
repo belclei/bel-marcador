@@ -4,15 +4,15 @@ import { MatchLog } from "./MatchLog";
 interface MatchControlsProps {
   match: TrucoMatch;
   onUndo: () => void;
-  onNewGame: () => void;
+  onNewGameClick: () => void;
 }
 
-export function MatchControls({ match, onUndo, onNewGame }: MatchControlsProps) {
+export function MatchControls({ match, onUndo, onNewGameClick }: MatchControlsProps) {
   return (
     <div className="flex flex-col items-center gap-3 px-2 py-3 flex-1 min-w-0">
       <button
         type="button"
-        onClick={onNewGame}
+        onClick={onNewGameClick}
         className="w-full bg-gray-800 hover:bg-gray-700 active:scale-95 transition-all rounded-lg py-2 text-sm font-semibold"
       >
         Novo Jogo
