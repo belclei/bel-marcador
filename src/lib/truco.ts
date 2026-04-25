@@ -20,8 +20,9 @@ export function createTrucoMatch(setup: TrucoSetup): TrucoMatch {
 }
 
 export function addScore(match: TrucoMatch, team: "A" | "B", points: number): TrucoMatch {
-  const teamA = team === "A" ? { ...match.teamA, score: match.teamA.score + points } : match.teamA;
-  const teamB = team === "B" ? { ...match.teamB, score: match.teamB.score + points } : match.teamB;
+  const cap = (score: number) => Math.min(score + points, match.maxScore);
+  const teamA = team === "A" ? { ...match.teamA, score: cap(match.teamA.score) } : match.teamA;
+  const teamB = team === "B" ? { ...match.teamB, score: cap(match.teamB.score) } : match.teamB;
   const round: Round = { teamAScore: teamA.score, teamBScore: teamB.score, undone: false };
   return { ...match, teamA, teamB, rounds: [...match.rounds, round] };
 }

@@ -66,6 +66,13 @@ describe("addScore", () => {
     expect(after2.rounds[1]).toEqual({ teamAScore: 3, teamBScore: 1, undone: false });
   });
 
+  it("caps score at maxScore when points would exceed it", () => {
+    const match = addScore(createTrucoMatch(baseSetup), "A", 9); // score = 9
+    const capped = addScore(match, "A", 6); // 9 + 6 = 15, but max is 12
+    expect(capped.teamA.score).toBe(12);
+    expect(capped.rounds.at(-1)?.teamAScore).toBe(12);
+  });
+
   it("does not mutate the original match", () => {
     const match = createTrucoMatch(baseSetup);
     addScore(match, "A", 3);

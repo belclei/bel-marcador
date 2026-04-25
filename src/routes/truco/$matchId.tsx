@@ -69,9 +69,7 @@ function TrucoMatchPage() {
         <ScoreButtons
           buttons={SCORE_BUTTONS}
           onScore={(pts) => applyAndSave(addScore(match, "A", pts))}
-          matchFinished={!!winner}
-          currentScore={match.teamA.score}
-          maxScore={match.maxScore}
+          disabled={!!winner}
           align="left"
         />
 
@@ -84,9 +82,7 @@ function TrucoMatchPage() {
         <ScoreButtons
           buttons={SCORE_BUTTONS}
           onScore={(pts) => applyAndSave(addScore(match, "B", pts))}
-          matchFinished={!!winner}
-          currentScore={match.teamB.score}
-          maxScore={match.maxScore}
+          disabled={!!winner}
           align="right"
         />
       </div>
