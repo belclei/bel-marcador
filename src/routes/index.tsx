@@ -14,7 +14,7 @@ function GameListPage() {
   function handleTrucoClick() {
     const matches = loadMatches();
     const active = [...matches].reverse().find(
-      (m) => m.gameType === "truco" && m.status === "in_progress"
+      (m) => m.gameType === "truco" && !m.finishedAt
     );
     if (active) {
       navigate({ to: "/truco/$matchId", params: { matchId: active.id } });

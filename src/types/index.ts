@@ -15,7 +15,6 @@ export const TeamSchema = z.object({
 export const TrucoMatchSchema = z.object({
   id: z.string(),
   gameType: z.literal("truco"),
-  status: z.enum(["in_progress", "finished"]),
   teamA: TeamSchema,
   teamB: TeamSchema,
   maxScore: z.number(),

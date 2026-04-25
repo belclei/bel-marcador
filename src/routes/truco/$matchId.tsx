@@ -31,9 +31,7 @@ function TrucoMatchPage() {
 
   function applyAndSave(updated: TrucoMatch) {
     const w = checkWinner(updated);
-    const final = w
-      ? { ...updated, status: "finished" as const, finishedAt: new Date().toISOString() }
-      : updated;
+    const final = w ? { ...updated, finishedAt: new Date().toISOString() } : updated;
     setMatch(final);
     setWinner(w);
     updateMatch(final);

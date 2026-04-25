@@ -11,7 +11,6 @@ export function createTrucoMatch(setup: TrucoSetup): TrucoMatch {
   return {
     id: crypto.randomUUID(),
     gameType: "truco",
-    status: "in_progress",
     teamA: { name: setup.teamAName || "Nós", members: setup.teamAMembers, score: 0 },
     teamB: { name: setup.teamBName || "Eles", members: setup.teamBMembers, score: 0 },
     maxScore: setup.maxScore,
@@ -48,7 +47,6 @@ export function undoLastRound(match: TrucoMatch): TrucoMatch {
 export function resetMatch(match: TrucoMatch): TrucoMatch {
   return {
     ...match,
-    status: "in_progress",
     teamA: { ...match.teamA, score: 0 },
     teamB: { ...match.teamB, score: 0 },
     rounds: [],

@@ -38,7 +38,6 @@ function PreviousGamesPage() {
 
 function MatchRow({ match }: { match: TrucoMatch }) {
   const date = new Date(match.createdAt).toLocaleDateString("pt-BR");
-  const status = match.status === "finished" ? "Finalizado" : "Em andamento";
 
   return (
     <li className="bg-gray-800 rounded-xl p-4">
@@ -53,10 +52,7 @@ function MatchRow({ match }: { match: TrucoMatch }) {
             {match.teamB.name}
           </div>
         </div>
-        <div className="text-right text-xs text-gray-400">
-          <div>{date}</div>
-          <div className="mt-1">{status}</div>
-        </div>
+        <div className="text-right text-xs text-gray-400">{date}</div>
       </div>
     </li>
   );

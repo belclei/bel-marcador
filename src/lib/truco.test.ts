@@ -31,9 +31,8 @@ describe("createTrucoMatch", () => {
     expect(match.rounds).toHaveLength(0);
   });
 
-  it("creates match as in_progress truco game", () => {
+  it("creates match with gameType truco", () => {
     const match = createTrucoMatch(baseSetup);
-    expect(match.status).toBe("in_progress");
     expect(match.gameType).toBe("truco");
   });
 });
@@ -136,14 +135,9 @@ describe("resetMatch", () => {
     expect(reset.maxScore).toBe(24);
   });
 
-  it("restores status to in_progress and removes finishedAt", () => {
-    const finished = {
-      ...createTrucoMatch(baseSetup),
-      status: "finished" as const,
-      finishedAt: "2026-01-01T00:00:00.000Z",
-    };
+  it("removes finishedAt after reset", () => {
+    const finished = { ...createTrucoMatch(baseSetup), finishedAt: "2026-01-01T00:00:00.000Z" };
     const reset = resetMatch(finished);
-    expect(reset.status).toBe("in_progress");
     expect(reset.finishedAt).toBeUndefined();
   });
 });
