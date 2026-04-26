@@ -1,0 +1,17 @@
+name: Testes e Deploy
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar dependências
+        run: npm ci
+      - name: Executar testes unitários
+        run: npm run test  
