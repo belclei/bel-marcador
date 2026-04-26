@@ -12,6 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Instalar dependências
-        run: npm ci
+        run: npm install
       - name: Executar testes unitários
         run: npm run test  
