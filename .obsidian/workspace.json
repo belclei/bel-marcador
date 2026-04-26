@@ -200,6 +200,8 @@
   },
   "active": "096a2994207a6b06",
   "lastOpenFiles": [
+    "src/routes/truco/$matchId.tsx.tmp.38373.1777168239881",
+    "src/components/truco/TrucoSetupModal.tsx",
     "node_modules/@rolldown/binding-linux-x64-gnu/rolldown-binding.linux-x64-gnu.node",
     "node_modules/@rolldown/binding-linux-x64-gnu/README.md",
     "node_modules/@rolldown/binding-linux-x64-gnu/package.json",
@@ -211,8 +213,6 @@
     "node_modules/@emnapi/wasi-threads/dist/wasi-threads.min.d.mts",
     "node_modules/@emnapi/wasi-threads/dist/wasi-threads.js",
     "node_modules/@emnapi/wasi-threads/dist/wasi-threads.esm-bundler.js",
-    "node_modules/@emnapi/wasi-threads/dist/wasi-threads.d.ts",
-    "node_modules/@emnapi/wasi-threads/dist/wasi-threads.d.mts",
     "node_modules/nitro/README.md",
     "node_modules/nf3/README.md",
     "node_modules/@emnapi/core/README.md",
