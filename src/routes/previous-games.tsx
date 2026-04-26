@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { loadMatches } from "~/lib/storage";
 import type { TrucoMatch } from "~/types";
@@ -37,23 +37,40 @@ function PreviousGamesPage() {
 }
 
 function MatchRow({ match }: { match: TrucoMatch }) {
-  const date = new Date(match.createdAt).toLocaleDateString("pt-BR");
+  const navigate = useNavigate();
+  const date = new Date(match.createdAt).toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
-    <li className="bg-gray-800 rounded-xl p-4">
-      <div className="flex justify-between items-start">
-        <div>
+    <li>
+      <button
+        type="button"
+        onClick={() => navigate({ to: "/truco/$matchId", params: { matchId: match.id } })}
+        className="w-full text-left bg-gray-800 hover:bg-gray-700 active:scale-95 transition-all rounded-xl p-4 cursor-pointer"
+      >
+        <div className="flex justify-between items-center mb-2">
           <span className="text-xs text-gray-400 uppercase tracking-wide">{match.gameType}</span>
-          <div className="mt-1 text-lg font-semibold">
-            {match.teamA.name}{" "}
-            <span className="text-yellow-400">
-              {match.teamA.score} – {match.teamB.score}
-            </span>{" "}
-            {match.teamB.name}
-          </div>
+          <span className="text-xs text-gray-400">{date}</span>
         </div>
-        <div className="text-right text-xs text-gray-400">{date}</div>
-      </div>
+        <div className="space-y-1">
+          <TeamLine name={match.teamA.name} score={match.teamA.score} />
+          <TeamLine name={match.teamB.name} score={match.teamB.score} />
+        </div>
+      </button>
     </li>
+  );
+}
+
+function TeamLine({ name, score }: { name: string; score: number }) {
+  return (
+    <div className="flex items-center gap-2">
+      <span className="flex-1 truncate text-sm font-semibold">{name}</span>
+      <span className="font-mono text-yellow-400 tabular-nums">{score}</span>
+    </div>
   );
 }

@@ -10,7 +10,7 @@ export function MatchLog({ rounds }: MatchLogProps) {
   }
 
   return (
-    <ul className="text-sm text-gray-400 space-y-1 overflow-y-auto max-h-40 text-center">
+    <ul className="font-mono text-sm text-gray-400 space-y-1 overflow-y-auto max-h-40 text-center tabular-nums">
       {rounds.map((round, i) => (
         <li key={i} className={round.undone ? "line-through text-gray-600" : ""}>
           {round.teamAScore} – {round.teamBScore}

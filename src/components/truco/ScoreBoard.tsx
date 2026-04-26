@@ -25,7 +25,7 @@ function TeamScore({
     <div
       className={`flex flex-col w-0 flex-1 break-words ${align === "right" ? "items-end text-right" : "items-start text-left"}`}
     >
-      <span className="text-5xl font-bold text-yellow-400">{team.score}</span>
+      <span className="text-5xl font-bold font-mono text-yellow-400">{team.score}</span>
       <span className="text-sm text-gray-400 mt-1 leading-tight">{team.name}</span>
       {team.members.length > 0 && (
         <span className="text-xs text-gray-500 leading-tight">{team.members.join(", ")}</span>
