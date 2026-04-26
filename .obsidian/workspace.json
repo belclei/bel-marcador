@@ -200,17 +200,18 @@
   },
   "active": "096a2994207a6b06",
   "lastOpenFiles": [
+    "dist/server/assets/truco-DbCLcUWO.js",
+    "dist/server/assets/storage-BGNnnZDs.js",
+    "dist/server/assets/start-HYkvq4Ni.js",
+    "dist/server/assets/router-DBQ-1iOy.js",
+    "dist/server/assets/previous-games-Cc5SlKNR.js",
+    "dist/server/assets/_tanstack-start-manifest_v-ClC1oh61.js",
+    "dist/server/assets/index-ChE5yxbD.js",
+    "dist/server/assets/_matchId-DNzFV1w5.js",
+    "dist/server/assets/__23tanstack-start-plugin-adapters-Cwee5PKy.js",
+    "dist/server/server.js",
+    "dist/server/assets",
     "README.md",
-    "README.md.tmp.38373.1777164460333",
-    "src/routes/previous-games.tsx.tmp.38373.1777149185546",
-    "src/components/truco/MatchLog.tsx.tmp.38373.1777149046995",
-    "src/components/truco/ScoreBoard.tsx.tmp.38373.1777149041362",
-    "src/routes/previous-games.tsx.tmp.38373.1777149034212",
-    "src/routes/previous-games.tsx.tmp.38373.1777148669165",
-    "src/routes/previous-games.tsx.tmp.38373.1777148659259",
-    "src/lib/truco.test.ts.tmp.38373.1777148426870",
-    "src/routes/truco/$matchId.tsx.tmp.38373.1777148419592",
-    "src/routes/truco/$matchId.tsx.tmp.38373.1777148414273",
     "CLAUDE.md",
     "Project.md",
     "truco.md",
@@ -234,7 +235,6 @@
     "node_modules/mdn-data/README.md",
     "node_modules/tough-cookie/README.md",
     "node_modules/decimal.js/README.md",
-    "node_modules/decimal.js/LICENCE.md",
-    "node_modules/whatwg-url/README.md"
+    "node_modules/decimal.js/LICENCE.md"
   ]
 }
