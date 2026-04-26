@@ -5,7 +5,7 @@ import { addScore, checkWinner, createTrucoMatch, SCORE_BUTTONS, undoLastRound }
 import { ScoreBoard } from "~/components/truco/ScoreBoard";
 import { ScoreButtons } from "~/components/truco/ScoreButtons";
 import { MatchControls } from "~/components/truco/MatchControls";
-import { TrucoSetupModal } from "~/routes/truco/-setup";
+import { TrucoSetupModal } from "~/components/truco/TrucoSetupModal";
 import type { TrucoMatch } from "~/types";
 
 export const Route = createFileRoute("/truco/$matchId")({

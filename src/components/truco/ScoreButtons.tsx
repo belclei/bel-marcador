@@ -14,7 +14,7 @@ export function ScoreButtons({ buttons, onScore, disabled, align }: ScoreButtons
           type="button"
           onClick={() => onScore(pts)}
           disabled={disabled}
-          className="w-14 h-14 rounded-lg bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 active:scale-90 disabled:opacity-30 disabled:cursor-not-allowed transition-all font-bold text-sm"
+          className="w-20 h-20 rounded-lg bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 active:scale-90 disabled:opacity-30 disabled:cursor-not-allowed transition-all font-bold text-sm"
         >
           +{pts}
         </button>
