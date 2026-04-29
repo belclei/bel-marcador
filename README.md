@@ -13,7 +13,7 @@ A mobile-first score tracker built for card games around the table. Open it on y
 - **Persistent games** — navigate away and come back; your match is exactly where you left it
 - **Match history** — browse past games with scores, teams, and timestamps
 - **Undo** — made a mistake? Undo the last round (it stays visible with a strikethrough)
-- **Score capping** — scores can never exceed the configured maximum; any button that would overshoot caps at the limit
+- **Score capping** — scores can never exceed the configured maximum
 
 ---
 
@@ -21,7 +21,7 @@ A mobile-first score tracker built for card games around the table. Open it on y
 
 ### Truco
 
-Two teams, up to three players each. First to reach the maximum score wins.
+Two teams, up to three players each. First to reach the maximum score wins. Each round only one team scores.
 
 | Button | Points |
 |--------|--------|
@@ -34,6 +34,21 @@ Two teams, up to three players each. First to reach the maximum score wins.
 **Configurable per match:**
 - Team names (up to 50 characters, defaults to *Nós* and *Eles*)
 - Maximum score (any positive integer, default 12)
+
+---
+
+### Livre (ex: Canastra)
+
+Manually add scores each round for both teams. Suitable for any game where both sides score simultaneously (e.g. Canastra, Buraco).
+
+**Configurable per match:**
+- Team names (up to 50 characters, defaults to *Nós* and *Eles*)
+- Maximum score (any positive integer, default 2000)
+
+**Match log** shows three values per round:
+- Left (green): points added for team A that round (e.g. `+260`)
+- Center (gray): running totals (e.g. `460 – 300`)
+- Right (green): points added for team B that round (e.g. `+250`)
 
 ---
 
@@ -85,25 +100,33 @@ npm run type-check   # TypeScript type check
 ```
 src/
 ├── routes/
-│   ├── __root.tsx           # HTML shell & global styles
-│   ├── index.tsx            # Game list (home)
-│   ├── previous-games.tsx   # Match history
-│   └── truco/
-│       ├── $matchId.tsx     # Live match screen
-│       └── -setup.tsx       # New-game modal (not a route)
+│   ├── __root.tsx              # HTML shell & global styles
+│   ├── index.tsx               # Game list (home)
+│   ├── previous-games.tsx      # Match history
+│   ├── truco/
+│   │   └── $matchId.tsx        # Live Truco match screen
+│   └── livre/
+│       └── $matchId.tsx        # Live Livre match screen
 ├── components/
 │   ├── GameCard.tsx
 │   ├── PreviousGamesCard.tsx
-│   └── truco/
-│       ├── ScoreBoard.tsx   # Scores + team names
-│       ├── ScoreButtons.tsx # +1 +3 +6 +9 +12
-│       ├── MatchControls.tsx
-│       └── MatchLog.tsx     # Round history
+│   ├── SetupModal.tsx          # Shared "Novo Jogo" modal (team names + max score)
+│   ├── truco/
+│   │   ├── ScoreBoard.tsx      # Scores + team names
+│   │   ├── ScoreButtons.tsx    # +1 +3 +6 +9 +12
+│   │   ├── MatchControls.tsx   # Novo Jogo, Desfazer, match log
+│   │   └── MatchLog.tsx        # Round history (centered, strikethrough for undone)
+│   └── livre/
+│       ├── ScoreBoard.tsx      # Scores + team names (two equal columns)
+│       ├── ScoreInputs.tsx     # Numeric inputs + Confirmar button
+│       └── MatchLog.tsx        # Round history (+delta left/right, totals center)
 ├── lib/
-│   ├── storage.ts           # localStorage CRUD (max 30 matches)
-│   └── truco.ts             # Pure game logic
+│   ├── storage.ts              # localStorage CRUD (max 30 matches)
+│   ├── match.ts                # Shared logic: undoLastRound, checkWinner
+│   ├── truco.ts                # Truco game logic + metadata
+│   └── livre.ts                # Livre game logic + metadata
 └── types/
-    └── index.ts             # Zod schemas + inferred types
+    └── index.ts                # Zod schemas + inferred types
 ```
 
 ---
@@ -122,10 +145,11 @@ npm run test
 
 1. **Open the app** on your phone browser
 2. **Tap a game** to resume the current match or start a fresh one
-3. **Score** by tapping the point buttons for each team
-4. **Undo** the last round if you tapped the wrong button
-5. **Novo Jogo** — opens a modal to configure teams and max score for a brand new match
-6. **Jogos anteriores** — browse your last 30 matches, tap any to reopen it
+3. **Truco** — tap the point buttons (+1, +3, +6, +9, +12) for each team
+4. **Livre** — type each team's round points and tap Confirmar
+5. **Undo** the last round if you made a mistake
+6. **Novo Jogo** — opens a modal to configure teams and max score for a new match
+7. **Jogos anteriores** — browse your last 30 matches, tap any to reopen it
 
 ---
 
@@ -138,10 +162,12 @@ Matches are stored in `localStorage` under the key `bel-marcador` as a JSON arra
 ## 🤝 Adding a New Game
 
 1. Create a `<gameName>.md` with the game's name, description, and rules
-2. Add pure logic functions in `src/lib/<gameName>.ts`
-3. Add a route at `src/routes/<gameName>/$matchId.tsx`
-4. Register the game card in `src/routes/index.tsx`
-5. Extend `GameStorageSchema` in `src/types/index.ts` if the match shape differs
+2. Add pure logic functions in `src/lib/<gameName>.ts` (export `createMatch`, `GAME_META`)
+3. Add shared logic to `src/lib/match.ts` if applicable
+4. Add components in `src/components/<gameName>/`
+5. Add a route at `src/routes/<gameName>/$matchId.tsx`
+6. Register the game card in `src/routes/index.tsx`
+7. Extend `MatchSchema` in `src/types/index.ts` with the new game type
 
 ---
 

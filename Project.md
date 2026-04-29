@@ -2,7 +2,7 @@ This project is Bel Marcador, a responsive website, used mainly in mobile device
 
 
 # Rules
-- Each game has its rules described in its corresponding file: [[truco]]
+- Each game has its rules described in its corresponding file: [[truco]], [[marcador livre]]
 - First page is a list of available games as cards: first line is the name of the game, second line, in smaller text is the description of the game (those data is provided in each game corresponding file).
 - First card is "Jogos anteriores" and shows the list of past matches (game type, teams, final score, date).
 - Tapping a game card resumes the current in-progress match for that game, or creates a new one with default settings if none exists.
@@ -29,18 +29,26 @@ src/
     previous-games.tsx      # Jogos anteriores
     truco/
       $matchId.tsx          # Live Truco match screen
-      -setup.tsx            # TrucoSetupModal component (not a route)
+    livre/
+      $matchId.tsx          # Live Livre match screen
   components/
     GameCard.tsx
     PreviousGamesCard.tsx
+    SetupModal.tsx          # Shared "Novo Jogo" modal (team names + max score)
     truco/
       ScoreBoard.tsx        # Scores + team names (equal 50/50 columns)
       ScoreButtons.tsx      # +1 +3 +6 +9 +12 per team (disabled when would exceed max)
       MatchControls.tsx     # Novo Jogo, Desfazer, match log
       MatchLog.tsx          # Round-by-round history with strikethrough for undone rounds
+    livre/
+      ScoreBoard.tsx        # Scores + team names (equal 50/50 columns)
+      ScoreInputs.tsx       # Numeric inputs for both teams + Confirmar button
+      MatchLog.tsx          # Round history: +delta (green) on edges, totals in center
   lib/
     storage.ts              # localStorage CRUD
-    truco.ts                # Pure game logic + metadata
+    match.ts                # Shared logic: undoLastRound, checkWinner
+    truco.ts                # Truco game logic + metadata
+    livre.ts                # Livre game logic + metadata
   types/
     index.ts                # Zod schemas and inferred types
 ```
