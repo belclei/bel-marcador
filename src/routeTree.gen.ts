@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PreviousGamesRouteImport } from './routes/previous-games'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TrucoMatchIdRouteImport } from './routes/truco/$matchId'
+import { Route as LivreMatchIdRouteImport } from './routes/livre/$matchId'
 
 const PreviousGamesRoute = PreviousGamesRouteImport.update({
   id: '/previous-games',
@@ -28,34 +29,48 @@ const TrucoMatchIdRoute = TrucoMatchIdRouteImport.update({
   path: '/truco/$matchId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LivreMatchIdRoute = LivreMatchIdRouteImport.update({
+  id: '/livre/$matchId',
+  path: '/livre/$matchId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/previous-games': typeof PreviousGamesRoute
+  '/livre/$matchId': typeof LivreMatchIdRoute
   '/truco/$matchId': typeof TrucoMatchIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/previous-games': typeof PreviousGamesRoute
+  '/livre/$matchId': typeof LivreMatchIdRoute
   '/truco/$matchId': typeof TrucoMatchIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/previous-games': typeof PreviousGamesRoute
+  '/livre/$matchId': typeof LivreMatchIdRoute
   '/truco/$matchId': typeof TrucoMatchIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/previous-games' | '/truco/$matchId'
+  fullPaths: '/' | '/previous-games' | '/livre/$matchId' | '/truco/$matchId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/previous-games' | '/truco/$matchId'
-  id: '__root__' | '/' | '/previous-games' | '/truco/$matchId'
+  to: '/' | '/previous-games' | '/livre/$matchId' | '/truco/$matchId'
+  id:
+    | '__root__'
+    | '/'
+    | '/previous-games'
+    | '/livre/$matchId'
+    | '/truco/$matchId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PreviousGamesRoute: typeof PreviousGamesRoute
+  LivreMatchIdRoute: typeof LivreMatchIdRoute
   TrucoMatchIdRoute: typeof TrucoMatchIdRoute
 }
 
@@ -82,12 +97,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrucoMatchIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/livre/$matchId': {
+      id: '/livre/$matchId'
+      path: '/livre/$matchId'
+      fullPath: '/livre/$matchId'
+      preLoaderRoute: typeof LivreMatchIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PreviousGamesRoute: PreviousGamesRoute,
+  LivreMatchIdRoute: LivreMatchIdRoute,
   TrucoMatchIdRoute: TrucoMatchIdRoute,
 }
 export const routeTree = rootRouteImport
